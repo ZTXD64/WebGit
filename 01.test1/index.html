@@ -16,6 +16,7 @@
         <!-- 引入vue，使用 ES 模块构建版本 -->
     <script type="module">
         import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+            // 创建Vue的app通过creatapp
             createApp({
                 data(){
                     return {
@@ -23,7 +24,8 @@
                     }
                 }
 
-            }).mount("#app");
+            }).mount('#app');
+            // 通过.mount("id选择器")挂载Vue的app
     
     </script>
 </body>

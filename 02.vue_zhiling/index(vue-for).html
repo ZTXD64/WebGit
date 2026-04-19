@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 设置id，vue挂载 -->
+    <div id="app">  
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>gender</th>
+                    <th>job</th>
+                    <th>entrydata</th>
+                    <th>updatetime</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr v-for = "(employ,index) in empList">
+                    <td>{{ employ.id }}</td>
+                    <td>{{ employ.name }}</td>
+                    <td>{{ employ.gender }}</td>
+                    <td>{{ employ.job }}</td>
+                    <td>{{ employ.entrydate }}</td>
+                    <td>{{ employ.updatetime }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+
+
+    <script type="module">
+        import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+        // v-for 用来遍历容器的元素或者对象的属性
+        // 语法:    v-for = "(item,index)in items"
+        //         参数说明：
+        //         ·items为要遍历的数组
+        //         item为遍历出来的元素
+        //         index为索引/下标，从0开始；可以省略，省略index语法：v-for="item in items"
+
+        createApp({
+            data(){
+                return {
+                    // 数组对象
+                    empList: [
+                        {   "id": 1,
+                            "name": "谢逊",
+                            "gender": 1,
+                            "job": "1",
+                            "entrydate": "2023-06-09",
+                            "updatetime": "2024-09-30T14:59:38"
+                        },
+                        {
+                            "id": 2,
+                            "name": "韦一笑",
+                            "gender": 1,
+                            "job": "1",
+                            "entrydate": "2020-05-09",
+                            "updatetime": "2024-09-01T00:00:00"
+                        },
+                        {
+                            "id": 3,
+                            "name": "黛绮丝",
+                            "gender": 2,
+                            "job": "2",
+                            "entrydate": "2021-06-01",
+                            "updatetime": "2024-09-01T00:00:00"
+                        }
+                    ]
+                }
+            }
+        }).mount("#app");
+
+
+
+
+
+    </script>
+</body>
+</html>
