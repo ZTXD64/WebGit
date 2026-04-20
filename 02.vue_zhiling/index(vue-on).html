@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- v-on指令：为元素绑定事件 -->
+        <button v-on:click="bt1">点击我</button>
+        <br>
+        <!-- v-on指令的缩写：@ -->
+        <button @click="bt2">点击我</button>
+    </div>
+    <script type="module">
+        import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+            // 创建Vue的app通过creatapp
+            createApp({
+                data(){},
+                methods: {
+                    // 定义事件处理函数
+                    bt1(){
+                        alert("按钮被点击了");
+                    },
+                    bt2(){
+                        alert("按钮2被点击了");
+                    }
+                }
+            }).mount('#app');
+            // 通过.mount("id选择器")挂载Vue的app
+    
+    </script>
+</body>
+</html>
