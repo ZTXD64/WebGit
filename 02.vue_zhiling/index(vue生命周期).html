@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- v-model指令，在表单元素上使用，双向数据绑定。可以方便地获取或设置表单数据 -->
+        <input type="text" v-model="searchconditions.name">
+        <p>这里显示输入框数据：{{searchconditions.name}}</p>
+        <button @click="clear">清空输入框</button>
+    </div>
+
+
+
+
+    <script type="module">
+        import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+            // 创建Vue的app通过creatapp
+            createApp({
+                data(){
+                    return {
+                        searchconditions : {
+                            name : "",
+                        }
+
+                    }
+                }
+                ,
+                //在vue3中，methods被定义为对象而不是函数。
+                methods: {
+
+                    //清空数据
+                    clear(){
+                        this.searchconditions.name = "";
+                    }
+                }
+                ,
+                mounted(){
+                    console.log("app已挂载");
+                }
+
+                //vue生命周期，只需要记住mounted即可：在页面加载完毕时，发送异步请求，加载数据，渲染界面
+
+            }).mount('#app');
+    
+    </script>
+</body>
+</html>

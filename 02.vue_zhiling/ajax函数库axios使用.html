@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 搜索表单区域 -->
+    <div class="search-area" style="margin-bottom: 20px;">
+        姓名：<input type="text" v-model="searchform.name" style="margin-right: 10px;">
+        性别：<input type="text" v-model="searchform.gender" style="margin-right: 10px;">
+        职位：<input type="text" v-model="searchform.job" style="margin-right: 10px;">
+        
+        <button type="button" @click="search">搜索</button>
+        <button type="button" @click="clear">清空</button>
+    </div>
+
+    <!-- 表格展示区 -->
+    <table border="1" cellspacing="0" cellpadding="8" style="width: 100%; text-align: center;">
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>头像</th>
+                <th>职位</th>
+                <th>入职时间</th>
+                <th>最后操作时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 示例数据行，实际使用时可结合 Vue v-for 渲染 -->
+             <!-- vue3中,v-for必须绑定key -->
+            <tr v-for="emp in emplist":key="emp.id">
+                <td>{{emp.id}}</td>
+                <td>{{emp.name}}</td>
+                <td>{{emp.gender == 1?"男" : "女"}}</td>
+
+
+                <!-- 插值表达式不能出现在标签内部，v-bind用来绑定属性值-->
+                <td><img v-bind:src="emp.img" :alt="emp.name"></td>
+
+
+                <td>
+                    <span v-if="emp.job == 1">班主任</span>
+                    <span v-else-if="emp.job == 2">讲师</span>
+                    <span v-else-if="emp.job == 3">学工主管</span>
+                    <span v-else-if="emp.job == 4">教研主管</span>
+                    <span v-else-if="emp.job == 5">咨询师</span>
+                    <span v-else>其他</span>
+                </td>
+                <td>{{emp.entrydate}}</td>
+                <td>{{emp.updatetime}}</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+
+
+    <!-- 引入axios，axios对原生的ajax进行了封装，使其更简单 -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+     <!-- 引入vue，使用 ES 模块构建版本 -->
+    <script type="module">
+        import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+            // 创建Vue的app通过creatapp
+            createApp({
+                data(){
+                    return {
+                        searchform : {
+                            name : "",
+                            gender : "",
+                            job : ""
+                        },
+                        emplist : []
+                    }
+                }
+                ,
+                methods: {
+                    // 获取数据
+                    async search(){
+                        //https://web-server.itheima.net/emps/list?name=${this.searchform.name}&gender={this.searchform.gender}&job={this.searchform.job}
+                        // 发送ajax请求
+                        //反引号，模板字符串拼接${this.searchform.name}
+                        let result = await axios.get(`https://web-server.itheima.net/emps/list?name=${this.searchform.name}&gender=${this.searchform.gender}&job=${this.searchform.job}`)
+                        this.emplist = result.data.data;
+                        // .then((result) => {
+                        //     this.emplist = result.data.data;
+                        // })
+                        // .catch((error) => {
+                        //     console.log(error);
+                        // })
+
+
+                        //！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+                        //这里从服务器获取数据，赋值给emplist，这里使用async和await
+                        //await只能在async修饰的函数中使用
+                        //异步执行变成了同步执行，加强代码的可读性和可维护性
+                        
+                    }
+                    ,
+                    clear(){
+                        this.searchform.name = "";
+                        this.searchform.gender = "";
+                        this.searchform.job = "";
+                        //清除搜索条件后刷新数据
+                        this.search();
+                    }
+                }
+                ,
+                //钩子函数，vue的生命周期
+                //用来在网页加载完后调用，一般用来初始化数据，这样页面不会在初次渲染完的时候显示空白
+                mounted(){
+                    this.search();
+                }
+
+            }).mount('#app');
+            // 通过.mount("id选择器")挂载Vue的app
+    
+    </script>
+
+
+
+    
+</body>
+</html>
